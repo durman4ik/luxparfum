@@ -123,3 +123,11 @@ development:
 
     # Ensure all times are UTC in the app side. (default: false)
     # use_utc: false
+production:
+  sessions:
+    default:
+      database: luxparfum_production
+      hosts:
+        - ec2-52-28-172-168.eu-central-1.compute.amazonaws.com:27017
+      username: luxparfu
+      password: luxparfu1924
