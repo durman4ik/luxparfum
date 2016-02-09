@@ -1,0 +1,32 @@
+.row{style: 'padding-bottom: 15px;'}
+  .col-md-2
+    = link_to 'Создать', new_admin_dashboard_product_url, class: 'pull-left btn btn-success'
+.row
+  .col-md-12{style: 'min-height: 500px;'}
+    %section.panel
+      %header.panel-heading
+        Все товары
+      .panel-body.table-responsive
+        %table.table.table-hover
+          .col-md-12#products_pagination{style: 'text-align:center;'}
+            = paginate @products
+          %thead
+            %tr
+              %th Название
+              %th Бренд
+              %th Категория
+              %th Цена
+              %th
+          %tbody#products
+            - @products.each do |product|
+              %tr
+                %td= product.name_en
+                %td= product.brand.name if product.brand
+                %td= product.categories.map(&:name).join(', ')
+                -#%td= number_with_delimiter product.price + ' б.р.' if product.price
+                %td
+                  = link_to edit_admin_dashboard_product_url(product, subdomain: 'admin'), class: 'btn btn-default btn-xs' do
+                    %i.fa.fa-pencil
+                  = link_to admin_dashboard_product_path(product), method: :delete, class: 'btn btn-default btn-xs',
+                          data: {confirm: "Вы уверены что хотите удалить товар #{product.name_en}"} do
+                    %i.fa.fa-times

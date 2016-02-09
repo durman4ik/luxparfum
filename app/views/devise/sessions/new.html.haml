@@ -1,0 +1,14 @@
+.login-card
+  %h1 Вход
+  %br/
+  .success
+    = flash[:notice]
+  .errors{style: 'color: red;'}
+    = flash[:alert]
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-signin'})  do |f|
+    = f.text_field :username, id: 'inputEmail', class: 'form-control', placeholder: 'Логин',
+          required: true, autocomplete: :off
+    = f.password_field :password, id: 'inputPassword', class: 'form-control', placeholder: 'Пароль',
+          required: true, autocomplete: :off
+    = f.submit 'Войти', class: 'login login-submit'
+  .login-help

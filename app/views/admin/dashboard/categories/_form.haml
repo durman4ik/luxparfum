@@ -1,0 +1,22 @@
+.col-md-12
+  %section.panel.general
+    = form_for [:admin, :dashboard, @category], html: { id: 'edit_form', multipart: true} do |f|
+      .panel-body
+        .tab-content
+          #home.tab-pane.active
+            .row
+              .col-md-8.form-group
+                = f.label 'Название'
+                = f.text_field :name, class: 'form-control', required: true
+              .col-md-4.form-group{style: 'float:right;'}
+                = f.label 'Товары'
+                = f.collection_select :product_ids, Product.all, :id, :name_en,
+                      { selected: (@category.products.map(&:id) unless f.object.new_record?)},
+                      {class: 'form-control', multiple: true, size: 9 }
+              .col-md-8.form-group
+                = f.label 'Описание'
+                = f.text_area :description, class: 'form-control', rows: 4
+
+          .row
+            .col-md-12{style: ' padding-top: 15px;'}
+              = f.submit 'Сохранить!', class: 'btn btn-info'

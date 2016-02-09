@@ -1,0 +1,106 @@
+.col-md-12
+  %section.panel.general
+    = nested_form_for [:admin, :dashboard, @product], html: { id: 'edit_form', multipart: true} do |f|
+      .panel-body
+        .tab-content
+          #home.tab-pane.active
+            .row
+              .col-md-12.form-group
+                = f.check_box :is_cosmetic, class: 'linear'
+                %label Косметика
+            .row
+              .col-md-6.form-group
+                = f.label 'Название на английском'
+                = f.text_field :name_en, class: 'form-control', required: true
+              .col-md-6.form-group
+                = f.label 'Название на русском'
+                = f.text_field :name_ru, class: 'form-control'
+            .row
+              .col-md-1.col-md-offset-11
+                = f.link_to_add '+', :volumes, data: {target: '#volume'}, class: 'btn btn-success pull-right'
+
+            #volume
+              = f.fields_for :volumes do |volume_builder|
+                .row
+                  .col-md-3.form-group
+                    = volume_builder.label 'Объем'
+                    = volume_builder.text_field :value, class: 'form-control'
+                  .col-md-3.form-group
+                    = volume_builder.label 'Цена без скидки'
+                    = volume_builder.text_field :old_price, class: 'form-control'
+                  .col-md-3.form-group
+                    = volume_builder.label 'Цена со скидкой'
+                    = volume_builder.text_field :price, class: 'form-control'
+                  .col-md-3.form-group
+                    = volume_builder.link_to_remove 'X', class: 'btn btn-danger pull-right',
+                      style: 'margin-top: 25px;'
+
+
+
+            .row
+              .col-md-5.form-group
+                = f.label 'Ссылка'
+                = f.text_field :slug, class: 'form-control'
+              .col-md-3.form-group
+                = f.label 'Тип'
+                = f.select :version, Product::VERSIONS, {include_blank: 'Нет'}, class: 'form-control'
+              .col-md-2.form-group{style: 'text-align:center;'}
+                = f.label 'Для мужчин'
+                %br
+                %div{ style: 'margin-top: 5px;'}
+                  = f.check_box :for_man, class: 'normal'
+              .col-md-2.form-group
+                = f.label 'Бренд'
+                = f.collection_select :brand_id, Brand.all, :id, :name,
+                      { selected: (@product.brand_id unless f.object.new_record? && f.object.brand.present?),
+                      rows: 4}, {class: 'form-control' }
+            .row
+              .col-md-12.form-group
+                = f.label 'Заголовок'
+                = f.text_field :title, class: 'form-control'
+
+            .row
+              .col-md-9.form-group
+                = f.label 'Описание'
+                = f.text_area :description, class: 'form-control', rows: 4, required: true
+              .col-md-3.form-group
+                = f.label 'Категории'
+                = f.collection_select :category_ids, Category.all, :id, :name,
+                      { selected: (@product.categories.map(&:id) unless f.object.new_record?), rows: 4},
+                      {class: 'form-control', multiple: true }
+            .row
+              .col-md-3.form-group
+                = f.label 'Год выпуска'
+                = f.text_area :year, class: 'form-control', rows: 3
+              .col-md-3.form-group
+                = f.label 'Верхние ноты'
+                = f.text_area :first_notes, class: 'form-control', rows: 3
+              .col-md-3.form-group
+                = f.label 'Ноты сердца'
+                = f.text_area :second_notes, class: 'form-control', rows: 3
+              .col-md-3.form-group
+                = f.label 'Базовые ноты'
+                = f.text_area :third_notes, class: 'form-control', rows: 3
+
+            - if !f.object.new_record? && @product.images.present?
+              .row
+                .col-md-12.form-group#images_list{style: 'height: 140px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;'}
+                  - @product.images.each do |image|
+                    %div#this_image{style: 'display:inline-block;'}
+                      .stat
+                        .stat-icon{style: 'height:90px;max-height:90px;overflow:hidden;'}
+                          = image_tag image.file(:thumb)
+                        .stat-info
+                          = link_to 'Удалить', admin_dashboard_product_image_path(id: image.id.to_s, product_id: f.object.id), method: :delete, remote: true,
+                              id: 'destroy_this_image', data: {confirm: 'Вы уверены?'}, class: 'label label-danger'
+            .row
+              .col-md-12.form-group
+                %label
+                  = 'Добавить изображения'
+                  = file_field_tag 'product', multiple: true, name: 'product[product_images][]',
+                      accept: 'image/png,image/gif,image/jpeg'
+
+          .row
+            .col-md-12{style: ' padding-top: 15px;'}
+              = f.submit 'Сохранить!', class: 'btn btn-info'
+

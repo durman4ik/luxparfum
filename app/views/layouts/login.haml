@@ -1,0 +1,8 @@
+%html.no-js{:lang => 'ru'}
+  / <![endif]
+  %head
+    = stylesheet_link_tag  'application', 'login/login', media: 'all'
+    = csrf_meta_tags
+
+  %body
+    = yield

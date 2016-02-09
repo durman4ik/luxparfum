@@ -1,0 +1,41 @@
+.col-md-12
+  %section.panel.general
+    = form_for [:admin, :dashboard, @brand], html: { id: 'edit_form', multipart: true} do |f|
+      .panel-body
+        .tab-content
+          #home.tab-pane.active
+            .row
+              .col-md-8.form-group
+                = f.label 'Название'
+                = f.text_field :name, class: 'form-control', required: true
+              .col-md-4.form-group{style: 'float:right;'}
+                = f.label 'Товары'
+                = f.collection_select :product_ids, Product.all, :id, :name_en,
+                      { selected: (@brand.products.map(&:id) unless f.object.new_record?)},
+                  {class: 'form-control', multiple: true, size: 14 }
+              .col-md-8.form-group
+                = f.label 'Ссылка'
+                = f.text_field :slug, class: 'form-control'
+              .col-md-8.form-group
+                = f.label 'Описание'
+                = f.text_area :description, class: 'form-control', rows: 4, required: true
+
+            - if !f.object.new_record? && f.object.image.present?
+              .row
+                .col-md-4
+                  .form-group
+                    = f.label 'Картинка слайда'
+                    = f.file_field :image
+                  .form-group{style: 'max-height: 180px; overflow: hidden;padding-top: 24px;'}
+                    - if action_name == 'edit' && f.object.image
+                      = image_tag f.object.image(:thumb)
+            .row
+              .col-md-12.form-group
+                %label
+                  = 'Добавить изображения'
+                  = f.file_field :image, accept: 'image/png,image/gif,image/jpeg'
+
+          .row
+            .col-md-12{style: ' padding-top: 15px;'}
+              = f.submit 'Сохранить!', class: 'btn btn-info'
+

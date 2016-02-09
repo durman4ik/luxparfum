@@ -1,0 +1,17 @@
+%table
+  %tbody
+    %tr
+      %th Имя
+      %th Телефон
+      %th Наименование
+      %th Количество
+      %th Объем
+      %th Сумма
+    %tr
+      %td= @order.name if @order.name
+      %td= @order.phone if @order.phone
+      %td= @order.product_name
+      %td= @order.count
+      %td= @order.volume[:value]
+      %td= @order.price
+

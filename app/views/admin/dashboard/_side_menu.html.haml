@@ -1,0 +1,25 @@
+%aside.left-side.sidebar-offcanvas
+  / sidebar: style can be found in sidebar.less
+  %section.sidebar
+    / Sidebar user panel
+    .user-panel
+      .pull-left.info
+        %p{style: 'float:left; padding-right:7px;'}
+          = Time.now.to_date.strftime('%d.%m.%Y')
+        %p#live_time{style: 'float:left;'}
+        %p
+          = l Date.today, format: '%A'
+
+    %ul.sidebar-menu
+      %li{class: "#{'active' if request.fullpath.include?('products')}" }
+        = link_to admin_dashboard_products_url(subdomain: 'admin') do
+          %i.fa.fa-money
+          %span Товары
+      %li{class: "#{'active' if request.fullpath.include?('brands')}" }
+        = link_to admin_dashboard_brands_url(subdomain: 'admin') do
+          %i.fa.fa-money
+          %span Бренды
+      %li{class: "#{'active' if request.fullpath.include?('categories')}" }
+        = link_to admin_dashboard_categories_url(subdomain: 'admin') do
+          %i.fa.fa-money
+          %span Категории

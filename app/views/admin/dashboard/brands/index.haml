@@ -1,0 +1,28 @@
+.row{style: 'padding-bottom: 15px;'}
+  .col-md-2
+    = link_to 'Создать', new_admin_dashboard_brand_url, class: 'pull-left btn btn-success'
+.row
+  .col-md-12{style: 'min-height: 500px;'}
+    %section.panel
+      %header.panel-heading
+        Все бренды
+      .panel-body.table-responsive
+        %table.table.table-hover
+          .col-md-12#orders_pagination{style: 'text-align:center;'}
+            = paginate @brands
+          %thead
+            %tr
+              %th Название
+              %th Товаров
+              %th
+          %tbody#orders
+            - @brands.each do |brand|
+              %tr
+                %td= brand.name
+                %td= brand.products.length
+                %td
+                  = link_to edit_admin_dashboard_brand_url(brand, subdomain: 'admin'), class: 'btn btn-default btn-xs' do
+                    %i.fa.fa-pencil
+                  = link_to admin_dashboard_brand_path(brand), method: :delete, class: 'btn btn-default btn-xs',
+                          data: {confirm: "Вы уверены что хотите удалить категорию #{brand.name}"} do
+                    %i.fa.fa-times
