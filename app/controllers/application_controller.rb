@@ -4,25 +4,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :auth_required
-
-  BAD_SUBDOMAINS = %w(api)
 
   def after_sign_in_path_for(resource)
-    admin_dashboard_index_url(subdomain: 'admin')
+    admin_dashboard_index_url
   end
 
   def after_sign_out_path_for(resource)
-    root_url(subdomain: 'admin')
+    root_url
   end
 
 
   protected
-
-  def auth_required
-    redirect_to root_url(subdomain: 'admin')  if !current_admin && request.subdomain != 'admin' &&
-        !BAD_SUBDOMAINS.include?(request.subdomain)
-  end
 
   def paginate(query)
     query.page(params[:page]).per(10)

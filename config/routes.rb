@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   devise_for :admins, controllers: { sessions: 'admin/sessions' }, path_names: { sign_in: '', sign_out: 'logout'}
 
-  namespace :admin, constraints: { subdomain: 'admin' }, path: '/' do
+  namespace :admin, path: '/' do
     resources :dashboard, only: [:index]
     namespace :dashboard, path: '/dashboard' do
       resources :products do
@@ -31,9 +31,8 @@ Rails.application.routes.draw do
 
   end
 
-  namespace :api, defaults: { format: :json }, constraints: { subdomain: 'api' }, path: '/' do
-    scope module: :v1,
-          constraints: ApiConstraints.new(version: 1, default: true) do
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
       resources :products,   only: [:show, :index]
       resources :brands,     only: [:index]
       get 'brands/:name' => 'brands#show'
