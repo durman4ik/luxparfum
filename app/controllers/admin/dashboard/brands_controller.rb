@@ -20,7 +20,7 @@ class Admin::Dashboard::BrandsController < ApplicationController
     @brand = Brand.new(brand_params)
     create_slug(@brand, @brand.name)
     if @brand.save
-      redirect_to admin_dashboard_brands_url(subdomain: 'admin')
+      redirect_to admin_dashboard_brands_url
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Admin::Dashboard::BrandsController < ApplicationController
   def update
     create_slug(@brand, brand_params[:name])
     if @brand.update(brand_params)
-      redirect_to admin_dashboard_brands_url(subdomain: 'admin')
+      redirect_to admin_dashboard_brands_url
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class Admin::Dashboard::BrandsController < ApplicationController
 
   def destroy
     @brand.delete
-    admin_dashboard_brands_url(subdomain: 'admin')
+    admin_dashboard_brands_url
   end
 
   private

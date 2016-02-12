@@ -12,14 +12,14 @@
 
     %ul.sidebar-menu
       %li{class: "#{'active' if request.fullpath.include?('products')}" }
-        = link_to admin_dashboard_products_url(subdomain: 'admin') do
+        = link_to admin_dashboard_products_url do
           %i.fa.fa-money
           %span Товары
       %li{class: "#{'active' if request.fullpath.include?('brands')}" }
-        = link_to admin_dashboard_brands_url(subdomain: 'admin') do
+        = link_to admin_dashboard_brands_url do
           %i.fa.fa-money
           %span Бренды
       %li{class: "#{'active' if request.fullpath.include?('categories')}" }
-        = link_to admin_dashboard_categories_url(subdomain: 'admin') do
+        = link_to admin_dashboard_categories_url do
           %i.fa.fa-money
           %span Категории

@@ -21,7 +21,7 @@ class Admin::Dashboard::ProductsController < ApplicationController
 
     if @product.save
       @product.add_images(product_params[:product_images])
-      redirect_to admin_dashboard_products_url(subdomain: 'admin')
+      redirect_to admin_dashboard_products_url
     else
       render :new
     end
@@ -31,7 +31,7 @@ class Admin::Dashboard::ProductsController < ApplicationController
     @product.assign_attributes(product_params)
     @product.add_images(product_params[:product_images]) if product_params[:product_images].present?
     if @product.save
-      redirect_to admin_dashboard_products_url(subdomain: 'admin')
+      redirect_to admin_dashboard_products_url
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class Admin::Dashboard::ProductsController < ApplicationController
 
   def destroy
     @product.delete
-    redirect_to admin_dashboard_products_url(subdomain: 'admin')
+    redirect_to admin_dashboard_products_url
   end
 
   def import

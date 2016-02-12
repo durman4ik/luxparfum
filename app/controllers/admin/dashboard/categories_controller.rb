@@ -20,7 +20,7 @@ class Admin::Dashboard::CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to admin_dashboard_categories_url(subdomain: 'admin')
+      redirect_to admin_dashboard_categories_url
     else
       render :new
     end
@@ -28,7 +28,7 @@ class Admin::Dashboard::CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      redirect_to admin_dashboard_categories_url(subdomain: 'admin')
+      redirect_to admin_dashboard_categories_url
     else
       render :new
     end
@@ -36,7 +36,7 @@ class Admin::Dashboard::CategoriesController < ApplicationController
 
   def destroy
     @category.delete
-    redirect_to admin_dashboard_categories_url(subdomain: 'admin')
+    redirect_to admin_dashboard_categories_url
   end
 
   private
