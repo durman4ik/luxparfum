@@ -5,7 +5,11 @@ Rails.application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-
+  config.paperclip_defaults = {
+      storage: :s3,
+      s3_host_name: 's3.eu-central-1.amazonaws.com',
+      bucket: 'luxparfum'
+  }
   # Do not eager load code on boot.
   config.eager_load = false
 

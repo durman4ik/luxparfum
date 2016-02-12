@@ -25,6 +25,12 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+  config.paperclip_defaults = {
+      :storage => :s3,
+      s3_host_name: 's3.eu-central-1.amazonaws.com',
+      :bucket => 'luxparfum'
+  }
+
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass

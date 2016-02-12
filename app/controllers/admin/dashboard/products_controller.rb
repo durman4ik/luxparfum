@@ -29,6 +29,7 @@ class Admin::Dashboard::ProductsController < ApplicationController
 
   def update
     @product.assign_attributes(product_params)
+    binding.pry
     @product.add_images(product_params[:product_images]) if product_params[:product_images].present?
     if @product.save
       redirect_to admin_dashboard_products_url
@@ -66,6 +67,7 @@ class Admin::Dashboard::ProductsController < ApplicationController
         :year,
         :for_man,
         :slug,
+        :is_cosmetic,
         category_ids: [],
         product_images: [],
         volumes_attributes: [:id, :_destroy, :value, :price, :old_price]

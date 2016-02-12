@@ -20,6 +20,7 @@ gem 'haml-rails'
 
 gem 'devise'
 gem 'mongoid-paperclip', require: 'mongoid_paperclip'
+gem 'aws-sdk', '< 2.0'
 gem 'kaminari'
 gem 'active_model_serializers'
 gem 'babosa'
